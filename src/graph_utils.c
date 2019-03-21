@@ -76,7 +76,11 @@ void generate_random(MKL_INT *graph, int graph_size, float prob) {
     mkl_free(randomNums);
 }
 
-
+/**
+ * @brief Generates a cycle graph of graph_size vertices
+ * @param graph The buffer to hold the graph
+ * @param graph_size The number of vertices in the graph
+ */
 void generate_cycle(MKL_INT *graph, int graph_size){
     for (int i = 0; i < graph_size-1; ++i) {
         graph[i*graph_size + i + 1] = 1;
