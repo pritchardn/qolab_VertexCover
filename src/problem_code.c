@@ -18,7 +18,7 @@ int Cx(int i, int num_qubits, cost_data_t *cost_data){
     for (c = 0; i; i >>= 1) {
         c += i & 1;
     }
-    return c;
+    return num_qubits - c;
 }
 
 /**
