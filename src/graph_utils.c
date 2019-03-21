@@ -77,6 +77,16 @@ void generate_random(MKL_INT *graph, int graph_size, float prob) {
 }
 
 
+void generate_cycle(MKL_INT *graph, int graph_size){
+    for (int i = 0; i < graph_size-1; ++i) {
+        graph[i*graph_size + i + 1] = 1;
+        graph[(i+1)*graph_size + i] = 1;
+    }
+    graph[graph_size * (graph_size-1)] = 1;
+    graph[graph_size-1] = 1;
+}
+
+
 /**
  * @brief Generates an undirected graph by edge population
  * @details Generates random numbers for the upper triangle of the graph adjacency matrix. Those < prob are populated
