@@ -6,13 +6,18 @@
 
 /**
  * @brief To be implemented by the user. This defines the problem investigated by the QAOA
+ * @detail In this case, we are counting the number of set bits, representing the number of vertices in a cover.
  * @param i
  * @param num_qubits
  * @param cost_data
  * @return A single integer value
  */
 int Cx(int i, int num_qubits, cost_data_t *cost_data){
-    return i;
+    unsigned int c;
+    for (c = 0; i; i >>= 1) {
+        c += i & 1;
+    }
+    return c;
 }
 
 /**
