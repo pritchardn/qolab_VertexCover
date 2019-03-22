@@ -32,8 +32,8 @@ bool mask(unsigned int i, cost_data_t *cost_data) {
     int src, dest;
     for (int j = 0; j < cost_data->num_vertices * cost_data->num_vertices; ++j) {
         if(cost_data->graph[j] == 1){
-            src = j % (int)cost_data->num_vertices;
-            dest = j / (int)cost_data->num_vertices;
+            src = j % cost_data->num_vertices;
+            dest = j / cost_data->num_vertices;
             if(!CHECK_BIT(i, src) && !CHECK_BIT(i, dest)){
                 return false;
             }
