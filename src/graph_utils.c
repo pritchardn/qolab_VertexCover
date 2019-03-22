@@ -27,7 +27,7 @@ void random_doubles(int num_request, double *buffer) {
  * @param out The filestream to print to
  */
 void print_graph(cost_data_t *cost_data, FILE *out){
-    int graph_size = (int)cost_data->num_vertices;
+    int graph_size = cost_data->num_vertices;
     for (int i = 0; i < graph_size; ++i) {
         for (int j = 0; j < graph_size; ++j) {
             fprintf(out, "%d ", cost_data->graph[graph_size * i + j]);
@@ -76,20 +76,6 @@ void generate_random(MKL_INT *graph, int graph_size, float prob) {
     mkl_free(randomNums);
 }
 
-/**
- * @brief Generates a cycle graph of graph_size vertices
- * @param graph The buffer to hold the graph
- * @param graph_size The number of vertices in the graph
- */
-void generate_cycle(MKL_INT *graph, int graph_size){
-    for (int i = 0; i < graph_size-1; ++i) {
-        graph[i*graph_size + i + 1] = 1;
-        graph[(i+1)*graph_size + i] = 1;
-    }
-    graph[graph_size * (graph_size-1)] = 1;
-    graph[graph_size-1] = 1;
-}
-
 
 /**
  * @brief Generates an undirected graph by edge population
@@ -102,7 +88,7 @@ void generate_cycle(MKL_INT *graph, int graph_size){
 void generate_undirected(MKL_INT *graph1, int graph_size, float prob) {
     double *randomNums = mkl_calloc((size_t) factorial(graph_size), sizeof(double), DEF_ALIGNMENT);
     check_alloc(randomNums);
-    random_doubles((int) factorial(graph_size), randomNums);
+    random_doubles(factorial(graph_size), randomNums);
     for (int i = 0; i < graph_size; ++i) {
         for (int j = i + 1; j < graph_size; ++j) {
             if (randomNums[i * graph_size + j] < prob) {
