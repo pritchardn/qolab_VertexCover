@@ -30,7 +30,7 @@ void print_graph(cost_data_t *cost_data, FILE *out){
     int graph_size = (int)cost_data->num_vertices;
     for (int i = 0; i < graph_size; ++i) {
         for (int j = 0; j < graph_size; ++j) {
-            fprintf(out, "%lld ", cost_data->graph[graph_size * i + j]);
+            fprintf(out, "%d ", cost_data->graph[graph_size * i + j]);
         }
         fprintf(out, "\n");
     }fprintf(out, "\n");
@@ -74,6 +74,20 @@ void generate_random(MKL_INT *graph, int graph_size, float prob) {
         }
     }
     mkl_free(randomNums);
+}
+
+/**
+ * @brief Generates a cycle graph of graph_size vertices
+ * @param graph The buffer to hold the graph
+ * @param graph_size The number of vertices in the graph
+ */
+void generate_cycle(MKL_INT *graph, int graph_size){
+    for (int i = 0; i < graph_size-1; ++i) {
+        graph[i*graph_size + i + 1] = 1;
+        graph[(i+1)*graph_size + i] = 1;
+    }
+    graph[graph_size * (graph_size-1)] = 1;
+    graph[graph_size-1] = 1;
 }
 
 
