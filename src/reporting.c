@@ -110,8 +110,8 @@ void optimiser_report(optimization_spec_t *opt_spec, int P, FILE *outfile) {
     fprintf(outfile, "Optimisation report\n"
                      "%d Method\n"
                      "%d Max evals\n"
-                     "%f xtol\n"
-                     "%f ftol\n",
+                     "%.2e xtol\n"
+                     "%.2e ftol\n",
             opt_spec->nlopt_method,
             opt_spec->max_evals,
             opt_spec->xtol,
@@ -123,6 +123,19 @@ void optimiser_report(optimization_spec_t *opt_spec, int P, FILE *outfile) {
     for (j = 0; j < P; ++j) {
         fprintf(outfile, "%f ", opt_spec->parameters[j + P]);
     }fprintf(outfile, "Betas\n");
+}
+
+/**
+ * @brief Reports on an individual optimisation iteration
+ * @param measurement The most recent measurement value
+ * @param meta_spec Contains all information about the simulation
+ */
+void iteration_report(double measurement, qaoa_data_t *meta_spec) {
+    FILE *oFile = meta_spec->run_spec->outfile;
+    if (meta_spec->run_spec->outfile == NULL) {
+        oFile = stdout;
+    }
+    fprintf(oFile, "%d: %f\n", meta_spec->qaoa_statistics->num_evals, measurement);
 }
 
 /**
